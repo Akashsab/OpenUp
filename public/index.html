@@ -81,6 +81,23 @@
         function clearChat() {
             document.getElementById('chatBox').innerHTML = '';
         }
+        // Receive messages and display them in the chat box
+socket.on('receiveMessage', (messageData) => {
+    const chatBox = document.getElementById('chatBox');
+    const messageClass = messageData.username === username ? 'my-message' : 'other-message';
+    
+    // Create a new div for the message
+    const messageDiv = document.createElement('div');
+    messageDiv.className = messageClass;
+    messageDiv.innerHTML = `<strong>${messageData.username}:</strong> ${messageData.message}`;
+    
+    // Append the new message to the chat box
+    chatBox.appendChild(messageDiv);
+
+    // Scroll to the latest message
+    chatBox.scrollTop = chatBox.scrollHeight;
+});
+
     </script>
 </body>
 </html>
