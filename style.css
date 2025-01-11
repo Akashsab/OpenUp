@@ -1,0 +1,164 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  /* Set custom gradient background */
+  background: linear-gradient(135deg, #00edff, #001fff, #da00ff); /* Gradient for the entire page */
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+/* Chat Container */
+.chat-container {
+  width: 400px;
+  background: linear-gradient(135deg, #eb6aff, #3e4bff); /* Gradient for chat container */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Username and Room Input Section */
+.username-section,
+.room-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#roomInput, #usernameInput, #messageInput {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #2513e8;
+  background: linear-gradient(135deg, #f3e1ff, #f3c6f9);
+}
+
+/* Buttons */
+button {
+  background: linear-gradient(135deg, #4000d7, #ad00e2); /* Gradient for buttons */
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background: linear-gradient(135deg, #a700f4, #1c00f3); /* Change gradient on hover */
+}
+
+/* Chat Box Section */
+.chat-box {
+  max-height: 300px; /* Fixed height for the chat box */
+  height: 300px;
+  overflow-y: scroll; /* Allow vertical scrolling */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+  margin-bottom: 10px;
+  background: linear-gradient(135deg, #f3e1ff, #f3c6f9); /* Contrasting gradient background */
+  border-radius: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hide scrollbar in Webkit browsers */
+.chat-box::-webkit-scrollbar {
+  width: 0px; /* Width of the scrollbar (set to 0px to hide) */
+  background: transparent; /* Optional: Make the scrollbar transparent */
+}
+
+/* For Firefox */
+.chat-box {
+  scrollbar-width: thin; /* Make the scrollbar thinner (doesn't show if set to 'none') */
+  scrollbar-color: transparent transparent; /* Hide the scrollbar in Firefox */
+}
+
+/* Sent Message Styles */
+.my-message {
+  text-align: right;
+  background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient for sent messages */
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
+  max-width: 75%;
+  word-wrap: break-word;
+  align-self: flex-end; /* Align the message to the right */
+}
+
+/* Received Message Styles */
+.other-message {
+  text-align: left;
+  background: linear-gradient(135deg, #cd50ff, #7b81fe); /* Gradient for received messages */
+  border-radius: 10px;
+  padding: 8px;
+  margin: 5px;
+  max-width: 75%;
+  word-wrap: break-word;
+  align-self: flex-start; /* Align the message to the left */
+}
+
+/* Button Disabled State */
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}
+
+/* Clear Button and Margin Styling */
+button + button {
+  margin-top: 10px;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .chat-container {
+    width: 90%; /* Adjust chat container to be smaller on mobile */
+    padding: 15px;
+  }
+
+  #usernameInput, #roomInput, #messageInput {
+    width: 100%; /* Make inputs full width on mobile */
+  }
+
+  button {
+    width: 100%; /* Make buttons full width on mobile */
+    padding: 12px;
+  }
+
+  .chat-box {
+    max-height: 250px;
+    height: 250px; /* Adjust height for mobile */
+    padding: 8px;
+  }
+
+  /* Ensure the username and room input sections are centered */
+  .username-section, .room-section {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Smaller adjustments for very small screens (e.g., mobile phones) */
+  .chat-container {
+    width: 100%; /* Full width on small screens */
+  }
+
+  .chat-box {
+    max-height: 200px;
+    height: 200px; /* Even smaller height for very small screens */
+  }
+}
