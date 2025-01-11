@@ -1,48 +1,47 @@
 const express = require('express');
 const http = require('http');
-const socketIo = require('socket.io');
+const { Server } = require('socket.io');
+const path = require('path');
+
+// Create an instance of Express
+const app = express();
+
+// Set the port
 const PORT = process.env.PORT || 3000;
+
+// Serve static files from the public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Create an HTTP server
+const server = http.createServer(app);
+
+// Initialize Socket.IO
+const io = new Server(server);
+
+// Handle Socket.IO connections
+io.on('connection', (socket) => {
+  console.log('A user connected');
+
+  // Join a room
+  socket.on('joinRoom', ({ username, room }) => {
+    socket.join(room);
+    console.log(`${username} joined room ${room}`);
+    io.to(room).emit('message', { username: 'System', message: `${username} has joined the room.` });
+  });
+
+  // Handle chat messages
+  socket.on('chatMessage', ({ username, room, message }) => {
+    io.to(room).emit('message', { username, message });
+  });
+
+  // Handle disconnects
+  socket.on('disconnect', () => {
+    console.log('A user disconnected');
+  });
+});
+
+// Start the server
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-
-// Create the app
-const app = express();
-const server = http.createServer(app);
-const io = socketIo(server);
-
-app.use(express.static('public')); // Serve static files from the 'public' directory
-
-// When a user connects
-io.on('connection', (socket) => {
-    console.log('A user connected');
-    
-    // Handle joining a room
-    socket.on('joinRoom', ({ username, room }) => {
-        // Join the room
-        socket.join(room);
-
-        // Send a welcome message to the joining user
-        socket.emit('receiveMessage', { username: 'System', message: `Welcome to the room: ${room}` });
-
-        // Notify all other users in the room about the new user
-        socket.to(room).emit('receiveMessage', { username: 'System', message: `${username} has joined the room.` });
-    });
-
-    // Handle sending messages
-    socket.on('sendMessage', ({ room, username, message }) => {
-        // Broadcast the message to all users in the room
-        io.to(room).emit('receiveMessage', { username, message });
-    });
-
-    // Handle user disconnect
-    socket.on('disconnect', () => {
-        console.log('A user disconnected');
-    });
-});
-
-// Start the server on port 3000
-server.listen(3000, () => {
-    console.log('Server is running on http://localhost:3000');
-});
