@@ -72,24 +72,3 @@ clearChatBtn.addEventListener("click", () => {
   messagesContainer.innerHTML = "";
   addMessage("Chat has been cleared!", "system");
 });
-// Send message and emit to the server
-sendBtn.addEventListener("click", () => {
-    const message = messageInput.value.trim();
-    if (message) {
-        socket.emit("chatMessage", { username, room, message }); // Emit to server
-        addMessage(`You: ${message}`, "sent"); // Add to local chat box
-        messageInput.value = ""; // Clear input
-    }
-});
-
-// Add a message to the chat box
-function addMessage(content, type) {
-    const messageDiv = document.createElement("div");
-    messageDiv.classList.add("message", type);
-    messageDiv.textContent = content;
-    messagesContainer.appendChild(messageDiv);
-
-    // Scroll to the latest message
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
-
